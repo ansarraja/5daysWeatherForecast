@@ -5,7 +5,7 @@
 }
 
 body {
-	font-family: 'Times New Roman', Times, serif;
+	font-family: 'Times New Roman', Times, serif;	
 }
 
 header {
@@ -15,12 +15,28 @@ header {
 	background-color: darkblue;
 }
 
-#history {
-	margin: 10px;
+.card { 
+	padding: 10px;
+	margin: 5px;
+	
+	
+}
+
+#day{
+background-color: black;
+color: rgb(223, 223, 229);
 }
 
 .sidebar {
 	background-color: lightgray;
 	padding: 10px;
 
+}
+
+@media (min-width: 768px) {
+	.row {
+					margin-right: 1em; 
+					padding: .5em;
+					
+	}
 }
