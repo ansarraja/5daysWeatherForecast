@@ -5,18 +5,21 @@ var cities = [];
 var currentDate = moment().format("DD/MM/YYYY");
 
 // reterieve Cities from local local storage
-storedCities = JSON.parse(localStorage.getItem("cities"));
-console.log(storedCities);
+// storedCities = JSON.parse(localStorage.getItem("cities"));
+// console.log(storedCities);
 displaySearchedCities();
 
 
 // Looping through the array of cities remove duplicate entires
 function displaySearchedCities() {
+	storedCities = JSON.parse(localStorage.getItem("cities"));
+	console.log(storedCities);
 	uniqueCities = [];
 	if (storedCities) {
 		storedCities.forEach((i) => {
 			if (!uniqueCities.includes(i)) {
 				uniqueCities.push(i);
+
 			}
 
 			cities = uniqueCities
@@ -44,15 +47,21 @@ $("#search-button").on("click", function (event) {
 	event.preventDefault();
 	// get value of city input
 	var city = $("#search-input").val().trim();
-	displaySearchedCities()
-	getWeatherInfo();
+	if (city) {
+		// displaySearchedCities()
+		getWeatherInfo();
+	}
+	else {
+		alert(" Error --- Please enter city name")
+	}
 });
 
 function getWeatherInfo() {
 	var city = $("#search-input").val();
 	console.log(city);
 	// push city input to cities array
-	cities.push(city);
+	// cities.push(city) and make 1st letter to capital;
+	cities.push(city.charAt(0).toUpperCase() + city.slice(1))
 	var queryURL1 =
 		"https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIKey;
 
@@ -61,11 +70,11 @@ function getWeatherInfo() {
 		method: "GET",
 	}).then(function (response) {
 		console.log(response);
-
-
-		displaySearchedCities();
 		//store cities in localStorage
 		localStorage.setItem("cities", JSON.stringify(cities));
+		displaySearchedCities();
+
+
 		renderForecast(response);
 
 	});
@@ -177,6 +186,6 @@ $("#history").on("click", ".city-item", function (event) {
 		console.log("city clicked" + response);
 
 		renderForecast(response);
-	
+
 	});
 });
